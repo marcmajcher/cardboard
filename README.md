@@ -65,6 +65,20 @@ The team will be able to add, view, and move tasks between the holding areas (ba
 	- Move card (assign state/assign to user)
 	- Delete card
 
-# REST Endpoints	
+# REST Endpoints
+
+	
+
+# Log
+
+	- Set up Postgress.app (http://postgresapp.com/)
+	- Get knex: http://knexjs.org/
+	- Get passport: http://passportjs.org/
+
+	- Reference: 
+		- https://www.npmjs.com/package/pg
+		- http://mherman.org/blog/2015/02/12/postgresql-and-nodejs/
+		- https://devcenter.heroku.com/articles/heroku-postgresql
+		- http://dnyy.sg/a-postgresql-backend-service-on-node-js-with-express-and-bookshelf-js/
 
 
