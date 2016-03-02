@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var Strategy = require('passport-twitter').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
 
 var routes = require('./routes/index');
 
@@ -28,12 +28,16 @@ app.use(require('express-session')({ secret: 'draobdrac', resave: true, saveUnin
 
 
 // set up passport twitter auth
-passport.use(new Strategy({
+passport.use(new TwitterStrategy({
     consumerKey: '5ZVjC2NQC9Z1H7evldoWizayd',
     consumerSecret: 'aHE74ykuUiu1ImsIM324LAaeK1LPPuWVQtQNdvKPj22l7o1A5E',
     callbackURL: 'http://127.0.0.1:3000/login/twitter/return'
   },
   function(token, tokenSecret, profile, callback) {
+    // User.findOrCreate({ twitterId: profile.id }, function(err, user) {
+    //   return callback(err, user);
+    // });
+
     return callback(null, profile);
   }));
 

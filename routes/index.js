@@ -4,13 +4,11 @@ var pg = require('pg');
 var path = require('path');
 var passport = require('passport');
 
-// var connectionString = require(path.join(__dirname, '../', '../', 'config'));
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-	res.sendFile(path.join(__dirname, '../views', 'index.html'));
+router.get('/', function(req, res) {
+	res.render('index', {
+		user: req.user
+	});
 });
-
 
 router.get('/login/twitter',
 	passport.authenticate('twitter'));
@@ -23,13 +21,17 @@ router.get('/login/twitter/return',
 		res.redirect('/');
 	});
 
-router.get('/profile',
+router.get('/logout', function(req, res) {
+	req.logout();
+	res.redirect('/');
+});
+
+router.get('/main',
 	require('connect-ensure-login').ensureLoggedIn(),
 	function(req, res) {
-		res.render('profile', {
+		res.render('main', {
 			user: req.user
 		});
 	});
-
 
 module.exports = router;
