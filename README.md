@@ -65,11 +65,17 @@ The team will be able to add, view, and move tasks between the holding areas (ba
 	- Move card (assign state/assign to user)
 	- Delete card
 
-# REST Endpoints
+
+
+## REST Endpoints
 
 	
+## User Flow
 
-# Log
+	- Log in with passport/social (google)
+	
+
+### Log
 
 	- Set up Postgress.app (http://postgresapp.com/)
 	- Get knex: http://knexjs.org/

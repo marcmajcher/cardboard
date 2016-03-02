@@ -4,9 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var Strategy = require('passport-twitter').Strategy;
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -18,12 +19,37 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('express-session')({ secret: 'draobdrac', resave: true, saveUninitialized: true }));
+
+
+// set up passport twitter auth
+passport.use(new Strategy({
+    consumerKey: '5ZVjC2NQC9Z1H7evldoWizayd',
+    consumerSecret: 'aHE74ykuUiu1ImsIM324LAaeK1LPPuWVQtQNdvKPj22l7o1A5E',
+    callbackURL: 'http://127.0.0.1:3000/login/twitter/return'
+  },
+  function(token, tokenSecret, profile, callback) {
+    return callback(null, profile);
+  }));
+
+passport.serializeUser(function(user, callback) {
+  callback(null, user);
+});
+
+passport.deserializeUser(function(user, callback) {
+  callback(null, user);
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
