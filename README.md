@@ -73,7 +73,14 @@ The team will be able to add, view, and move tasks between the holding areas (ba
 ## User Flow
 
 	- Log in with passport/social (google)
-	
+	- Create Team
+	- Join Team
+
+	- View board 
+	- Create Card -> backlog
+	- Move card to lane
+
+	- Log out
 
 ### Log
 

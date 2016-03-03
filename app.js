@@ -10,6 +10,7 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 var routes = require('./routes/index');
 
 var app = express();
+var db = require('./models/db');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,7 +52,6 @@ passport.deserializeUser(function(user, callback) {
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.use('/', routes);
 
