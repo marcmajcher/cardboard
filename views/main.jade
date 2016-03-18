@@ -1,7 +1,5 @@
 extends layout
 
 block content
-  div asdfasdfasd
-    if (user)
-      p You are logged in as #{user.username}
-      a(href="/logout") Log out
+  if (user)
+    p You are logged in as #{user.displayName}

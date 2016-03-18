@@ -10,4 +10,4 @@ knex.migrate.latest([config])
 		console.log("* db migrated and seeded.")
 	});
 
-module.exports = knex
+module.exports = knex;

@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
 	}).then(function() {
 	    return knex.schema.createTable('users', function(table) {
 	    	table.increments('uid').primary();
+				table.string('remoteId');
 	      table.string('username');
 	      table.string('name');
 	      table.string('email');

@@ -11,7 +11,9 @@ var routes = require('./routes/index');
 require('dotenv').load();
 
 var app = express();
-var db = require('./models/db');
+var knex = require('./db/knex');
+var User = knex('users');
+// var User = require('./models/user');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,7 +30,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('express-session')({ secret: 'draobdrac', resave: true, saveUninitialized: true }));
 
-
 // set up passport twitter auth
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_KEY,
@@ -36,11 +37,28 @@ passport.use(new TwitterStrategy({
     callbackURL: process.env.TWITTER_CALLBACK + '/login/twitter/return'
   },
   function(token, tokenSecret, profile, callback) {
-    // User.findOrCreate({ twitterId: profile.id }, function(err, user) {
-    //   return callback(err, user);
-    // });
+    console.log("  GOT USER: "+profile.username);
 
-    return callback(null, profile);
+    User.where({remoteId: profile.id}).select('*').then(function(records) {
+      console.log("** RECORDS: "+records.length);
+      console.log(records);
+      if (records.length === 0) {
+        console.log("  INSERTING BECAUSE WHY NOT");
+        User.insert({
+          remoteId: profile.id,
+          username: profile.username,
+          name: profile.displayName
+        }).then(function() {
+          console.log("  * Inserted user: "+profile.username);
+          return callback(null, profile);
+        })
+      }
+      else {
+        console.log("  NO INSERT");
+        return callback(null, profile);
+      }
+    });
+
   }));
 
 passport.serializeUser(function(user, callback) {

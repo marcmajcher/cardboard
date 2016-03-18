@@ -6,6 +6,7 @@ var passport = require('passport');
 
 router.get('/', function(req, res) {
 	res.render('index', {
+		title: "Cardboard",
 		user: req.user
 	});
 });
@@ -14,10 +15,11 @@ router.get('/main',
 	require('connect-ensure-login').ensureLoggedIn(),
 	function(req, res) {
 		res.render('main', {
+			title: "Cardboard",
 			user: req.user
 		});
 	});
-	
+
 // Authentication routes
 
 router.get('/login/twitter',
