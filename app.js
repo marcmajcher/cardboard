@@ -8,6 +8,7 @@ var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 
 var routes = require('./routes/index');
+require('dotenv').load();
 
 var app = express();
 var db = require('./models/db');
@@ -30,9 +31,9 @@ app.use(require('express-session')({ secret: 'draobdrac', resave: true, saveUnin
 
 // set up passport twitter auth
 passport.use(new TwitterStrategy({
-    consumerKey: '5ZVjC2NQC9Z1H7evldoWizayd',
-    consumerSecret: 'aHE74ykuUiu1ImsIM324LAaeK1LPPuWVQtQNdvKPj22l7o1A5E',
-    callbackURL: 'http://127.0.0.1:3000/login/twitter/return'
+    consumerKey: process.env.TWITTER_KEY,
+    consumerSecret: process.env.TWITTER_SECRET,
+    callbackURL: process.env.TWITTER_CALLBACK + '/login/twitter/return'
   },
   function(token, tokenSecret, profile, callback) {
     // User.findOrCreate({ twitterId: profile.id }, function(err, user) {

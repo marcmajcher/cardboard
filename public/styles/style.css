@@ -1,8 +1,26 @@
 body {
   padding: 50px;
+  margin-top: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: white url("/img/cardboard-bg.png") repeat;
 }
 
 a {
   color: #00B7FF;
+}
+
+.navbar {
+  background-color: white;
+  min-height: 50px;
+}
+
+.navbar-brand {
+    color: black;
+    font-size: 32px;
+}
+
+.aligner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

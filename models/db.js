@@ -1,7 +1,6 @@
-var config = require('../knexfile.js');
-var env = 'development';
-var knex = require('knex')(config[env]);
-module.exports = knex;
+var environment = process.env.NODE_ENV || 'development';
+var config = require('../knexfile.js')[environment];
+knex = require('knex')(config);
 
 knex.migrate.latest([config])
 	.then(function() {
@@ -10,3 +9,5 @@ knex.migrate.latest([config])
 	.then(function() {
 		console.log("* db migrated and seeded.")
 	});
+
+module.exports = knex
