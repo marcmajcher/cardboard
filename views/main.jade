@@ -2,4 +2,17 @@ extends layout
 
 block content
   if (user)
-    p You are logged in as #{user.displayName}
+
+    if (userTeams)
+      p You are on #{team.name}
+    else
+      p You are not on a team. Select one:
+        ul
+          for team in teams
+            li= team.name
+
+      p or create a new team:
+      .createTeam
+        form(name="createTeam", action="/team", method="post")
+          input.input-block-level(type="text", name="teamName", placeholder="New Team Name")
+          button.btn.btn-large.btn-primary(type="submit") Create

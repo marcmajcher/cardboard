@@ -31,30 +31,32 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('express-session')({ secret: 'draobdrac', resave: true, saveUninitialized: true }));
 
 // set up passport twitter auth
+// TBD: is there a better place for this to live?
 passport.use(new TwitterStrategy({
     consumerKey: process.env.TWITTER_KEY,
     consumerSecret: process.env.TWITTER_SECRET,
     callbackURL: process.env.TWITTER_CALLBACK + '/login/twitter/return'
   },
   function(token, tokenSecret, profile, callback) {
-    console.log("  GOT USER: "+profile.username);
+    // console.log("  GOT USER: "+profile.username);
 
+    // TBD use transaction? whereNotExists?
     User.where({remoteId: profile.id}).select('*').then(function(records) {
-      console.log("** RECORDS: "+records.length);
+      // console.log("** RECORDS: "+records.length);
       console.log(records);
       if (records.length === 0) {
-        console.log("  INSERTING BECAUSE WHY NOT");
+        // console.log("  INSERTING BECAUSE WHY NOT");
         User.insert({
           remoteId: profile.id,
           username: profile.username,
           name: profile.displayName
         }).then(function() {
-          console.log("  * Inserted user: "+profile.username);
+          // console.log("  * Inserted user: "+profile.username);
           return callback(null, profile);
         })
       }
       else {
-        console.log("  NO INSERT");
+        // console.log("  NO INSERT");
         return callback(null, profile);
       }
     });
