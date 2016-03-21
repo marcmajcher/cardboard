@@ -4,6 +4,6 @@ module.exports = {
     connection: {
       database: 'cardboard_dev'
     }
-    ,debug: true
+    // ,debug: true
   }
 }

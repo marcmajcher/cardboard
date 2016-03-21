@@ -12,8 +12,6 @@ require('dotenv').load();
 
 var app = express();
 var knex = require('./db/knex');
-var User = knex('users');
-// var User = require('./models/user');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,12 +39,12 @@ passport.use(new TwitterStrategy({
     // console.log("  GOT USER: "+profile.username);
 
     // TBD use transaction? whereNotExists?
-    User.where({remoteId: profile.id}).select('*').then(function(records) {
-      // console.log("** RECORDS: "+records.length);
+    knex('users').where({remoteId: profile.id}).select('*').then(function(records) {
+      console.log("** RECORDS: "+records.length);
       console.log(records);
       if (records.length === 0) {
         // console.log("  INSERTING BECAUSE WHY NOT");
-        User.insert({
+        knex('users').insert({
           remoteId: profile.id,
           username: profile.username,
           name: profile.displayName
